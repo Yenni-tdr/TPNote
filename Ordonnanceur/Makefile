@@ -66,9 +66,9 @@ run :
 
 #Help menu
 help :
-	@echo "Welcome to my Makefile."
-	@echo "Here are the options you can use :"
-	@echo "\t make : compile your project,"
-	@echo "\t make clean : clean repertories Bin and Obj. Move their files to trash,"
-	@echo "\t make hardClean : remove Bin and Obj repertories"
-	@echo "\t make run : run the target"
+	@echo "Bienvenue dans le Makefile."
+	@echo "Voici les options disponibles :"
+	@echo "\t make : Compiler le projet,"
+	@echo "\t make clean : Nettoyer les dossiers Bin et Obj. Deplacer les fichiers dans la corbeille,"
+	@echo "\t make hardClean : Suppression des dossiers Bin et Obj,"
+	@echo "\t make run : Executer le programme."
