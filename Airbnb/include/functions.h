@@ -17,7 +17,7 @@ typedef struct{
     float distance[COLS];
 }Logement;
 
-   
+//Procédure permettant de récupérer les données du fichier csv et de les stocker dans un tableau de type Logement   
 void init(Logement data[ROWS]){
     FILE *fp;
     fp = fopen("data/airbnb_donnees_propre.csv", "r");
@@ -33,12 +33,10 @@ void init(Logement data[ROWS]){
             fgets(buffer, MAX_CHAR, fp);
             if (buffer[0] == ','){
                 i = 0;
-                continue; //On ne prends pas en compte la 1ere ligne
+                continue; //On ne prends pas en compte la 1ere ligne du fichier csv
             }
-            //printf("Row : %s", buffer);
             value = strtok(buffer, ",");
             while(value != NULL){
-                //printf("Token : %s\n", value);
                 if(j == 9){
                     j = 0;
                 }
@@ -80,6 +78,7 @@ void init(Logement data[ROWS]){
     }
 }
 
+//Procédure permettant de calculer la distance en fonction d'un critère
 void dist(Logement x, Logement data[ROWS], Logement data2[ROWS]){
     float sum1,sum2,sum3 = {0};
     for(int k = 0; k<ROWS; k++){
@@ -113,6 +112,7 @@ void dist(Logement x, Logement data[ROWS], Logement data2[ROWS]){
     }
 }
 
+//Procédure d'affichage
 void affichage(Logement data2[ROWS], int l){
     for (int i = 0; i<ROWS; i++){
         printf("%d ", data2[i].id);
@@ -123,45 +123,47 @@ void affichage(Logement data2[ROWS], int l){
     printf("id   distance  prix\n");
 }
 
+//Procédure permettant de randomiser le tableau de logements
 void randomize(Logement data2[ROWS], int l){
     srand(time(NULL));
     float tmp, tmp2, tmp3 = {0};
     for (int i = 0; i<ROWS; i++){
         int rand_row = rand()%ROWS;
-            tmp = data2[i].distance[l];
-            tmp2 = data2[i].id;
-            tmp3 = data2[i].price;
-            data2[i].distance[l] = data2[rand_row].distance[l];
-            data2[i].id = data2[rand_row].id;
-            data2[i].price = data2[rand_row].price;
-            data2[rand_row].distance[l] = tmp;
-            data2[rand_row].id = tmp2;
-            data2[rand_row].price = tmp3;
+        tmp = data2[i].distance[l];
+        tmp2 = data2[i].id;
+        tmp3 = data2[i].price;
+        data2[i].distance[l] = data2[rand_row].distance[l];
+        data2[i].id = data2[rand_row].id;
+        data2[i].price = data2[rand_row].price;
+        data2[rand_row].distance[l] = tmp;
+        data2[rand_row].id = tmp2;
+        data2[rand_row].price = tmp3;
     }
 }
 
+//Procédure permettant de trier le tableau de logements en fonction de la distance
 void sort(Logement data2[ROWS], int l){
     float tmp,tmp2,tmp3 = {0};
     for (int k = 1; k<ROWS; k++){
         for (int i = 0; i<ROWS-1; i++){
-        
-                float a = data2[i].distance[l];
-                float b = data2[i+1].distance[l];
-                if(a>b){
-                    tmp = data2[i].distance[l];
-                    tmp2 = data2[i].id;
-                    tmp3 = data2[i].price;
-                    data2[i].distance[l] = data2[i+1].distance[l];
-                    data2[i].id = data2[i+1].id;
-                    data2[i].price = data2[i+1].price;
-                    data2[i+1].distance[l] = tmp;
-                    data2[i+1].id = tmp2;
-                    data2[i+1].price = tmp3;
-                }
+            float a = data2[i].distance[l];
+            float b = data2[i+1].distance[l];
+            if(a>b){
+                tmp = data2[i].distance[l];
+                tmp2 = data2[i].id;
+                tmp3 = data2[i].price;
+                data2[i].distance[l] = data2[i+1].distance[l];
+                data2[i].id = data2[i+1].id;
+                data2[i].price = data2[i+1].price;
+                data2[i+1].distance[l] = tmp;
+                data2[i+1].id = tmp2;
+                data2[i+1].price = tmp3;
+            }
         }
     }
 }
 
+//Procédure qui calcule le prix estimé du logement en fonction des k premiers logements
 void price(Logement data2[ROWS], int k){
     float price = 0;
     for (int i = 0; i<k; i++){
