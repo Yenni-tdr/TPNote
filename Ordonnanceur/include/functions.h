@@ -2,7 +2,7 @@
 
 typedef struct Process Process;
 struct Process{
-    char name[3];
+    int num;
     int ex_time;
     int priority;
     Process* next;
@@ -16,6 +16,7 @@ typedef struct{
     File* file;
 }Ordonnanceur;
 
+//Initialisation de la file
 File* initialiserfile(){
     File *file = malloc(sizeof(*file));
 
@@ -28,13 +29,14 @@ File* initialiserfile(){
     return file;
 }
 
+//Procédure qui ajoute un processus à notre ordonnanceur
 void ajout_activite(Ordonnanceur o){
     Process* p = malloc(sizeof(*p));
-    char nom[3];
+    int num;
     int ex_time, priority = {0};
 
-    printf("Saisir nom du processus a ajouter :\n");
-    scanf("%s", nom);
+    printf("Saisir numero du processus a ajouter :\n");
+    scanf("%d", &num);
     printf("Saisir temps d'execution du processus :\n");
     scanf("%d", &ex_time);
     if(ex_time <= 0){
@@ -52,7 +54,7 @@ void ajout_activite(Ordonnanceur o){
         }
     }
     
-    strcpy(p->name, nom);
+    p->num = num;
     p->ex_time = ex_time;
     p->priority = priority;
     p->next = NULL;
@@ -77,6 +79,7 @@ void ajout_activite(Ordonnanceur o){
     }
 }
 
+//Procédure d'affichage de notre ordonnanceur (à utiliser lorsque l'on souhaite effectuer des vérifications)
 void affichage(Ordonnanceur o){
     if(o.file == NULL){
         exit(EXIT_FAILURE);
@@ -85,13 +88,14 @@ void affichage(Ordonnanceur o){
     if(o.file->first != NULL){
         Process* current = o.file->first;
         while(current != NULL){
-            printf(" %s ->", current->name);
+            printf(" p%d ->", current->num);
             current = current->next;
         }
     }
     printf(" NULL\n");  
 }
 
+//Procédure permettant de défiler un élément de notre file (un processus)
 void defiler(Ordonnanceur o){
     if (o.file == NULL){
         exit(EXIT_FAILURE);
@@ -105,6 +109,7 @@ void defiler(Ordonnanceur o){
     }
 }
 
+//Procédure qui permet d'effectuer un tour d'ordonnancement
 void step(Ordonnanceur o){
     if(o.file == NULL){
         exit(EXIT_FAILURE);
@@ -112,7 +117,7 @@ void step(Ordonnanceur o){
  
     int n = o.file->first->ex_time;
     system("clear");
-    printf("Execution du processus : %s\n", o.file->first->name);
+    printf("Execution du processus : p%d\n", o.file->first->num);
     fflush(stdout);
     for(int i = 0; i<n; i++){
         putchar('.');
@@ -122,6 +127,7 @@ void step(Ordonnanceur o){
     defiler(o);
 }
 
+//Procédure qui itère step jusqu'à que notre file de processus soit vide
 void run(Ordonnanceur o){
     do{
         step(o);
