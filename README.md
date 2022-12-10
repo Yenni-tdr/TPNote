@@ -15,6 +15,6 @@ Les processus sont donc exécutés en fonction de leur priorité, plus celle-ci 
 
 ## Makefile
 
-Pour compiler le projet utiliser la commande make.  
+Pour compiler le projet utiliser la commande make en se plaçant à la racine d'un des deux dossiers.
 Pour éxécuter le projet utiliser la commande make run.  
 Manuel d'utilisation du Makefile : make help
