@@ -2,7 +2,7 @@
 #define NB_CARAC 8
 #define MAX_CHAR 100
 #define ROWS 7917
-#define COLS 3
+#define COLS 4
 
 typedef struct{
     int id;
@@ -80,11 +80,12 @@ void init(Logement data[ROWS]){
 
 //Procédure permettant de calculer la distance en fonction d'un critère
 void dist(Logement x, Logement data[ROWS], Logement data2[ROWS]){
-    float sum1,sum2,sum3 = {0};
+    float sum1,sum2,sum3,sum4 = {0};
     for(int k = 0; k<ROWS; k++){
         sum1 = 0;
         sum2 = 0;
         sum3 = 0;
+        sum4 = 0;
         for (int l = 0; l<NB_CARAC+1; l++){
             switch (l){
                 case 0:
@@ -96,8 +97,10 @@ void dist(Logement x, Logement data[ROWS], Logement data2[ROWS]){
                 case 2 :
                     sum2 += pow((x.bedrooms - data[k].bedrooms), 2);
                 break;
+                case 3 :
+                    sum3 += pow((x.bathrooms - data[k].bathrooms), 2);
                 case 4:
-                    sum3 += pow((x.beds - data[k].beds), 2);
+                    sum4 += pow((x.beds - data[k].beds), 2);
                 break;
                 case 5 :
                     data2[k].price = data[k].price;
@@ -109,6 +112,7 @@ void dist(Logement x, Logement data[ROWS], Logement data2[ROWS]){
         data2[k].distance[0] = sqrt(sum1);
         data2[k].distance[1] = sqrt(sum2);
         data2[k].distance[2] = sqrt(sum3);
+        data2[k].distance[3] = sqrt(sum4);
     }
 }
 
