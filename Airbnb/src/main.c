@@ -1,6 +1,6 @@
 #include "../include/functions.h"
 
-int main(void){
+int main(int argc, char* argv[]){
     Logement x;
     Logement data[ROWS];
     Logement data2[ROWS];
@@ -32,6 +32,14 @@ int main(void){
             scanf("%f", &x.beds);
         }
     }
+    printf("Nombre de salle de bains :\n");
+    scanf("%f", &x.bathrooms);
+    if(x.beds <= 0){
+        printf("Le logement doit au moins avoir une salle de bain\n");
+        while(x.bathrooms<= 0){
+            scanf("%f", &x.bathrooms);
+        }
+    }
 
     dist(x, data, data2);
     system("clear");
@@ -39,16 +47,15 @@ int main(void){
     printf("0. Nombre de personnes\n");
     printf("1. Nombre de chambres\n");
     printf("2. Nombre de lits\n");
+    printf("3. Nombre de salle de bains\n");
     scanf("%d", &l);
-    if(l<0 || l>2){
+    if(l<0 || l>3){
         printf("Veuillez selectionner un critere valable\n");
-        while(l<0 || l>2){
+        while(l<0 || l>3){
             scanf("%d", &l);
         }
     }
     randomize(data2, l);
-    //affichage(data2);
-    //printf("\n\n");
     sort(data2, l);
     affichage(data2, l);
 
@@ -57,6 +64,12 @@ int main(void){
     if(k <= 0){
         printf("Vous devez comparer à au moins un logement\n");
         while(k <= 0){
+            scanf("%d", &k);
+        }
+    }
+    if(k > 7917){
+        printf("Le nombre maximal de logements presents dans la base de donnees est 7917\n");
+        while(k > 7917){
             scanf("%d", &k);
         }
     }
